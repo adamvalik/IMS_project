@@ -1,10 +1,10 @@
-EXEC = ims
+EXEC = lab
 SRC = $(wildcard *.cpp)
 OBJ = $(patsubst %.cpp,%.o,$(SRC))
 
 CPP = g++
-CPPFLAGS = -std=c++20 #-Wall -Wextra -pedantic -O2 -Werror
-LIBS = 
+CPPFLAGS = #-Wall -Wextra -pedantic
+LIBS = -lsimlib -lm
 
 .PHONY: all clean run pack
 
@@ -22,7 +22,7 @@ clean:
 	rm -f *.o $(EXEC)
 
 run: all
-	./ims
+	./$(EXEC)
 
 pack: clean
 	zip -rv	04_xeffen00_xvalik05.zip Makefile *.cpp *.hpp doc.pdf
