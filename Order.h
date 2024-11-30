@@ -63,6 +63,8 @@ private:
      */
     bool hasSW;
 
+    bool isWorkedOnByManager = false;
+
     void handleRejectedOrder();
     void waitForArrival();
     bool acquireWorkerOrManager(bool& isManager);
@@ -72,6 +74,7 @@ private:
     void releaseResources(bool isManager);
     void finalizeOrder(double start);
     void processNextOrderInQueue();
+    void handleCatastrophicError();
 
 };
 

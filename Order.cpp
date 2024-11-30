@@ -1,6 +1,5 @@
 #include "Order.h"
 
-
 void Order::Behavior() {
     if (!isPriority && (Random() < PROB_NOT_ACCREDITED || OrderQueue.Length() >= ORDER_QUEUE_SIZE)) {
         handleRejectedOrder();
@@ -23,14 +22,17 @@ void Order::Behavior() {
     processNextOrderInQueue();
 }
 
+
 void Order::handleRejectedOrder() {
     RejectedOrders++;
     Passivate();
 }
 
+
 void Order::waitForArrival() {
     Wait(Exponential(TIME_ORDER_ARRIVAL));
 }
+
 
 bool Order::acquireWorkerOrManager(bool& isManager) {
     if (!Workers.Full()) {
@@ -40,6 +42,7 @@ bool Order::acquireWorkerOrManager(bool& isManager) {
     } else if (!Manager.Busy()) {
         Seize(Manager, 0);
         isManager = true;
+        isWorkedOnByManager = true;
         return true;
     } else {
         if (isPriority) {
@@ -56,6 +59,7 @@ bool Order::acquireWorkerOrManager(bool& isManager) {
     }
 }
 
+
 void Order::useReferenceDevice() {
     if (isPrecise) {
         Enter(PreciseRefDev, 1);
@@ -63,6 +67,7 @@ void Order::useReferenceDevice() {
         Enter(UnpreciseRefDev, 1);
     }
 }
+
 
 void Order::performCalibration() {
     auto timeOfCalibration = Random() < isAuto ? Exponential(TIME_AUTO_CALIBRATION) : Exponential(TIME_MANUAL_CALIBRATION);
@@ -84,6 +89,7 @@ void Order::performCalibration() {
     }
 }
 
+
 void Order::handleCalibrationError(double timeOfCalibration) {
     Errors++;
     auto totalDuration = Exponential(timeOfCalibration);
@@ -98,7 +104,42 @@ void Order::handleCalibrationError(double timeOfCalibration) {
         Wait(numErrors * Exponential(TIME_REPAIR) + restOfDuration);
     } else {
         // Handle catastrophic errors if necessary
+        handleCatastrophicError();
     }
+}
+
+
+void Order::handleCatastrophicError() {
+    // Handle catastrophic errors if necessary
+    double machineFailure = Random();
+
+    if (machineFailure < PROB_REFDEV_BROKE - PROB_ERROR_BOTH) {
+        // Reference device failure only
+        handleReferenceDeviceFailure();
+    } else if (machineFailure < PROB_REF_DEVICE_FAILURE + PROB_RESULT_NOT_OK - PROB_ERROR_BOTH) {
+        // Order failure only
+        handleOrderFailure();
+    } else {
+        // Both fail
+        handleReferenceDeviceFailure();
+        handleOrderFailure();
+    }
+}
+
+
+void Order::handleOrderFailure() {
+
+    if (isPrecise) {
+        Leave(PreciseRefDev, 1);
+    } else {
+        Leave(UnpreciseRefDev, 1);
+    }
+
+    releaseResources(isWorkedOnByManager);
+
+    // Remove the order permanently from the system
+    CanceledOrders++;
+    Passivate();
 }
 
 void Order::releaseResources(bool isManager) {
@@ -109,6 +150,7 @@ void Order::releaseResources(bool isManager) {
     }
 }
 
+
 void Order::finalizeOrder(double start) {
     Seize(Manager, 1);
     Wait(Exponential(TIME_WRITE_REPORT));
@@ -117,6 +159,7 @@ void Order::finalizeOrder(double start) {
     ProcessingTime(Time - start);
     ProcessedOrders++;
 }
+
 
 void Order::processNextOrderInQueue() {
     if (!OrderQueue.Empty()) {
