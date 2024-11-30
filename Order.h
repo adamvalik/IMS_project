@@ -26,6 +26,7 @@ extern int RejectedOrders;
 extern int ProcessedOrders;
 extern int Errors;
 extern int CatastrophicFailures;
+extern int BothFailuresCatastrophy;
 
 class Order : public Process {
 
@@ -81,6 +82,7 @@ private:
     void handleCatastrophicError();
     void handleReferenceDeviceFailure();
     void handleOrderFailure();
+    void handleBothFailure();
 
 
 };

@@ -34,6 +34,7 @@ void Order::Behavior() {
 
     useReferenceDevice();
     performCalibration();
+    // TODO: TOTO ASI NEFACHCI
     if (CatastrophicFailure){
         return;
     }
@@ -151,11 +152,16 @@ void Order::handleCatastrophicError() {
         handleOrderFailure();
     } else {
         // Both fail (10%: 90-100) TODO: THIS MIGHT NOT BE CORRECT AS THEY WORK WITH SAME RESOURCE
-        handleReferenceDeviceFailure();
-        handleOrderFailure();
+        BothFailuresCatastrophy++;
+        handleBothFailure();
     }
 }
 
+void Order::handleBothFailure() {
+    (new ReferenceDeviceFailure(isPrecise))->Activate();
+    releaseResources(isWorkedOnByManager);
+    Passivate();
+}
 
 void Order::handleOrderFailure() {
 
@@ -178,6 +184,7 @@ void Order::handleReferenceDeviceFailure() {
     OrderQueue.InsFirst(this);
     Passivate();
     processNextOrderInQueue();
+    //TODO: Nebije se to s returnem v Behavioru?
 }
 
 void Order::releaseResources(bool isManager) {

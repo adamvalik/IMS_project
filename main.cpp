@@ -24,6 +24,7 @@ int ProcessedOrders = 0;
 int Errors = 0;
 int Recalibrations = 0;
 int CatastrophicFailures = 0;
+int BothFailuresCatastrophy = 0;
 
 
 class OrderGenerator : public Event {
@@ -90,6 +91,7 @@ int main() {
     std::cout << "Number of errors: " << Errors << std::endl;
     std::cout << "Number of recalibrations: " << Recalibrations << std::endl;
     std::cout << "Number of catastrophic failures: " << CatastrophicFailures << std::endl;
+    std::cout << "Number of both failures catastrophies: " << BothFailuresCatastrophy << std::endl;
 
     return 0;
 }
