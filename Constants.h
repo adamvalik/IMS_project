@@ -17,7 +17,7 @@
 #define PROB_SMALL_ERROR 1
 #define PROB_ERROR_BOTH 0.05
 #define PROB_RESULT_NOT_OK 0.5
-#define PROB_REFDEV_BROKE 0.5
+#define PROB_SINGLEDEV_BROKE 0.5
 
 #define ORDER_QUEUE_SIZE 100
 
@@ -30,6 +30,7 @@
 #define TIME_WRITE_REPORT 1
 #define TIME_RECALIBRATION_GENERATION (24 * 365 * 2) / ((numPreciseRefDev) + (numUnpreciseRefDev))
 #define TIME_RECALIBRATION 24
+#define TIME_REFDEV_FAILURE_REPAIR (24 * 7)
 
 extern double isAuto;
 extern int numPreciseRefDev;

@@ -27,7 +27,7 @@ int Recalibrations = 0;
 
 class OrderGenerator : public Event {
     void Behavior() {
-        (new Order(Random() < PROB_PRIORITY, Random() < PROB_PRECISE))->Activate();
+        (new Order(Random() < PROB_PRIORITY, Random() < PROB_PRECISE), Random() < isAuto)->Activate();
         Activate(Time + Exponential(TIME_ORDER_GENERATION));
     }
 };
@@ -60,6 +60,22 @@ class RecalibrationGenerator : public Event {
     void Behavior() {
         (new Recalibration())->Activate();
         Activate(Time + Exponential(TIME_RECALIBRATION_GENERATION));
+    }
+};
+
+class ReferenceDeviceFailure : public Process {
+    bool isPrecise;
+
+    ReferenceDeviceFailure(bool precise) : isPrecise(precise) {}
+    
+    void Behavior() {
+        Wait(Exponential(TIME_REFDEV_FAILURE_REPAIR));
+            
+        if (isPrecise) {
+            Leave(PreciseRefDev, 1);
+        } else {
+            Leave(UnpreciseRefDev, 1);
+        }
     }
 };
 

@@ -34,7 +34,7 @@ public:
      * @param priority
      * @param precision
      */
-    Order(bool priority, bool precision) : isPriority(priority), isPrecise(precision) {}
+    Order(bool priority, bool precision, bool isAuto) : isPriority(priority), isPrecise(precision), hasSW(isAuto) {}
 
     /**
      * @brief Destroy the Order object

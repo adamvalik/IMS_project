@@ -70,7 +70,7 @@ void Order::useReferenceDevice() {
 
 
 void Order::performCalibration() {
-    auto timeOfCalibration = Random() < isAuto ? Exponential(TIME_AUTO_CALIBRATION) : Exponential(TIME_MANUAL_CALIBRATION);
+    auto timeOfCalibration = hasSW ? Exponential(TIME_AUTO_CALIBRATION) : Exponential(TIME_MANUAL_CALIBRATION);
 
     if (Random() < PROB_ERROR) {
         handleCalibrationError(timeOfCalibration);
@@ -113,14 +113,14 @@ void Order::handleCatastrophicError() {
     // Handle catastrophic errors if necessary
     double machineFailure = Random();
 
-    if (machineFailure < PROB_REFDEV_BROKE - PROB_ERROR_BOTH) {
-        // Reference device failure only
+    if (machineFailure < PROB_SINGLEDEV_BROKE - PROB_ERROR_BOTH) {
+        // Reference device failure only (45%: 0-45)
         handleReferenceDeviceFailure();
-    } else if (machineFailure < PROB_REF_DEVICE_FAILURE + PROB_RESULT_NOT_OK - PROB_ERROR_BOTH) {
-        // Order failure only
+    } else if (machineFailure < 2*(PROB_SINGLEDEV_BROKE - PROB_ERROR_BOTH)) {
+        // Order failure only (45%: 45-90)
         handleOrderFailure();
     } else {
-        // Both fail
+        // Both fail (10%: 90-100)
         handleReferenceDeviceFailure();
         handleOrderFailure();
     }
@@ -138,8 +138,16 @@ void Order::handleOrderFailure() {
     releaseResources(isWorkedOnByManager);
 
     // Remove the order permanently from the system
-    CanceledOrders++;
     Passivate();
+}
+
+void Order::handleReferenceDeviceFailure() {
+    // order goes to the first position in the queue
+    (new ReferenceDeviceFailure(isPrecise))->Activate();
+    releaseResources(isWorkedOnByManager);
+    OrderQueue.InsFirst(this);
+    Passivate();
+    processNextOrderInQueue();
 }
 
 void Order::releaseResources(bool isManager) {
