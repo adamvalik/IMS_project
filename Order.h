@@ -17,6 +17,7 @@
 extern Facility Manager;
 extern Store Workers;
 extern Queue OrderQueue;
+extern Queue ManagerQueue;
 extern Store PreciseRefDev;
 extern Store UnpreciseRefDev;
 
@@ -24,6 +25,7 @@ extern Stat ProcessingTime;
 extern int RejectedOrders;
 extern int ProcessedOrders;
 extern int Errors;
+extern int CatastrophicFailures;
 
 class Order : public Process {
 
@@ -65,6 +67,8 @@ private:
 
     bool isWorkedOnByManager = false;
 
+    bool CatastrophicFailure = false;
+
     void handleRejectedOrder();
     void waitForArrival();
     bool acquireWorkerOrManager(bool& isManager);
@@ -75,6 +79,9 @@ private:
     void finalizeOrder(double start);
     void processNextOrderInQueue();
     void handleCatastrophicError();
+    void handleReferenceDeviceFailure();
+    void handleOrderFailure();
+
 
 };
 

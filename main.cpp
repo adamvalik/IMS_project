@@ -23,11 +23,12 @@ int RejectedOrders = 0;
 int ProcessedOrders = 0;
 int Errors = 0;
 int Recalibrations = 0;
+int CatastrophicFailures = 0;
 
 
 class OrderGenerator : public Event {
     void Behavior() {
-        (new Order(Random() < PROB_PRIORITY, Random() < PROB_PRECISE), Random() < isAuto)->Activate();
+        (new Order(Random() < PROB_PRIORITY, Random() < PROB_PRECISE, Random() < isAuto))->Activate();
         Activate(Time + Exponential(TIME_ORDER_GENERATION));
     }
 };
@@ -63,22 +64,6 @@ class RecalibrationGenerator : public Event {
     }
 };
 
-class ReferenceDeviceFailure : public Process {
-    bool isPrecise;
-
-    ReferenceDeviceFailure(bool precise) : isPrecise(precise) {}
-    
-    void Behavior() {
-        Wait(Exponential(TIME_REFDEV_FAILURE_REPAIR));
-            
-        if (isPrecise) {
-            Leave(PreciseRefDev, 1);
-        } else {
-            Leave(UnpreciseRefDev, 1);
-        }
-    }
-};
-
 int main() {
     // Initialize the simulation (time from 0 to 24 hours)
     Init(0, HOURS_SIMULATION);
@@ -98,11 +83,13 @@ int main() {
     PriorityWaitTime.Output();
     PreciseRefDev.Output();
     UnpreciseRefDev.Output();
+    ManagerQueue.Output();
 
     std::cout << "Number of processed orders: " << ProcessedOrders << std::endl;
     std::cout << "Number of rejected orders: " << RejectedOrders << std::endl;
     std::cout << "Number of errors: " << Errors << std::endl;
     std::cout << "Number of recalibrations: " << Recalibrations << std::endl;
+    std::cout << "Number of catastrophic failures: " << CatastrophicFailures << std::endl;
 
     return 0;
 }

@@ -1,5 +1,22 @@
 #include "Order.h"
 
+class ReferenceDeviceFailure : public Process {
+    bool isPrecise;
+
+public:
+    ReferenceDeviceFailure(bool precise) : isPrecise(precise) {}
+
+    void Behavior() {
+        Wait(Exponential(TIME_REFDEV_FAILURE_REPAIR));
+
+        if (isPrecise) {
+            Leave(PreciseRefDev, 1);
+        } else {
+            Leave(UnpreciseRefDev, 1);
+        }
+    }
+};
+
 void Order::Behavior() {
     if (!isPriority && (Random() < PROB_NOT_ACCREDITED || OrderQueue.Length() >= ORDER_QUEUE_SIZE)) {
         handleRejectedOrder();
@@ -17,6 +34,9 @@ void Order::Behavior() {
 
     useReferenceDevice();
     performCalibration();
+    if (CatastrophicFailure){
+        return;
+    }
     releaseResources(isManager);
     finalizeOrder(start);
     processNextOrderInQueue();
@@ -78,6 +98,10 @@ void Order::performCalibration() {
         Wait(Exponential(timeOfCalibration));
     }
 
+    if (CatastrophicFailure){
+        return;
+    }
+
     if (Random() < PROB_RESULT_NOT_OK) {
         Wait(Exponential(TIME_TWEAK));
     }
@@ -101,7 +125,11 @@ void Order::handleCalibrationError(double timeOfCalibration) {
     int numErrors = Random() < PROB_ERROR_BOTH ? 2 : 1;
 
     if (Random() < PROB_SMALL_ERROR) {
-        Wait(numErrors * Exponential(TIME_REPAIR) + restOfDuration);
+        if (numErrors == 2) {
+            Wait(Exponential(TIME_REPAIR) + Exponential(TIME_REPAIR) + restOfDuration);
+        } else {
+            Wait(Exponential(TIME_REPAIR) + restOfDuration);
+        }
     } else {
         // Handle catastrophic errors if necessary
         handleCatastrophicError();
@@ -111,6 +139,8 @@ void Order::handleCalibrationError(double timeOfCalibration) {
 
 void Order::handleCatastrophicError() {
     // Handle catastrophic errors if necessary
+    CatastrophicFailures++;
+    CatastrophicFailure = true;
     double machineFailure = Random();
 
     if (machineFailure < PROB_SINGLEDEV_BROKE - PROB_ERROR_BOTH) {
@@ -120,7 +150,7 @@ void Order::handleCatastrophicError() {
         // Order failure only (45%: 45-90)
         handleOrderFailure();
     } else {
-        // Both fail (10%: 90-100)
+        // Both fail (10%: 90-100) TODO: THIS MIGHT NOT BE CORRECT AS THEY WORK WITH SAME RESOURCE
         handleReferenceDeviceFailure();
         handleOrderFailure();
     }
@@ -160,14 +190,25 @@ void Order::releaseResources(bool isManager) {
 
 
 void Order::finalizeOrder(double start) {
-    Seize(Manager, 1);
-    Wait(Exponential(TIME_WRITE_REPORT));
-    Release(Manager);
+    if (!Manager.Busy()) {
+        Seize(Manager, 1);
+        Wait(Exponential(TIME_WRITE_REPORT));
+        Release(Manager);
+    } else {
+        // If the manager is busy, move the order to the ManagerQueue
+        Into(ManagerQueue);
+        Passivate();
+    }
 
+    // Activate the next order waiting in the ManagerQueue, if any
+    if (!ManagerQueue.Empty()) {
+        ManagerQueue.GetFirst()->Activate();
+    }
+
+    // Record processing time and update statistics
     ProcessingTime(Time - start);
     ProcessedOrders++;
 }
-
 
 void Order::processNextOrderInQueue() {
     if (!OrderQueue.Empty()) {
