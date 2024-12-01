@@ -14,6 +14,8 @@
 #include "simlib.h"
 #include "Constants.h"
 
+extern Facility Externist;
+
 extern Facility Manager;
 extern Store Workers;
 extern Queue OrderQueue;
@@ -83,6 +85,8 @@ private:
     void handleReferenceDeviceFailure();
     void handleOrderFailure();
     void handleBothFailure();
+
+    void notifyExternist();
 
 
 };

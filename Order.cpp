@@ -17,11 +17,33 @@ public:
     }
 };
 
+void Order::notifyExternist() {
+    if (!Externist.Busy()) {
+        Seize(Externist);
+        double remainingTime = 9 * 8;
+        while (remainingTime > 0) {
+            double workTime = Exponential(24);
+            if (workTime > remainingTime) {
+                Wait(remainingTime);
+                hasSW = false;
+                break;
+            } else {
+                Wait(workTime);
+                remainingTime -= workTime;
+                hasSW = true;
+            }
+        }
+        Release(Externist);
+    }
+}
+
 void Order::Behavior() {
     if (!isPriority && (Random() < PROB_NOT_ACCREDITED || OrderQueue.Length() >= ORDER_QUEUE_SIZE)) {
         handleRejectedOrder();
         return;
     }
+
+    notifyExternist();
 
     waitForArrival();
 

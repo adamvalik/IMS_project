@@ -9,6 +9,9 @@ int numPreciseRefDev = 2;
 int numUnpreciseRefDev = 10;
 
 Facility Manager("Manager");
+
+Facility Externist("Externist");
+
 Store Workers("Workers", NUM_WORKERS);
 Queue OrderQueue("OrderQueue");
 Queue ManagerQueue("ManagerQueue");
