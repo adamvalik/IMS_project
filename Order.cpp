@@ -7,6 +7,13 @@ public:
     ReferenceDeviceFailure(bool precise) : isPrecise(precise) {}
 
     void Behavior() {
+
+        if (isPrecise) {
+            Enter(PreciseRefDev, 1);
+        } else {
+            Enter(UnpreciseRefDev, 1);
+        }
+
         Wait(Exponential(TIME_REFDEV_FAILURE_REPAIR));
 
         if (isPrecise) {
@@ -28,7 +35,7 @@ public:
     void Behavior() {
         Seize(Externist); // check ze na externistu neexistuje fronta
         Wait(workTime - timer);
-        if (isAuto < 0.75) isAuto += 0.005;
+        if (isAuto < 0.75) isAuto += AUTO_INCREASE;
         Release(Externist);
     }
 };
@@ -39,9 +46,9 @@ void Order::notifyExternist() {
         return;
     } else { // hasSW = false && externist not busy
         Seize(Externist);
-        double workTime = Exponential(3 * 8);
+        double workTime = Normal(4 * 8, 6);
         double arrivalTime = Exponential(2 * 8);
-        double timer = Exponential(9 * 8);
+        double timer = (9 * 8);
 
         if (workTime < timer && arrivalTime < timer) {
             // normalni
@@ -49,14 +56,14 @@ void Order::notifyExternist() {
                 Wait(workTime);
                 Release(Externist);
                 hasSW = true;
-                if (isAuto < 0.75) isAuto += 0.005;
+                increaseAuto();
                 Wait(arrivalTime - workTime);
                 return;
             } else { // arrivalTime < workTime
                 Wait(workTime);
                 Release(Externist);
                 hasSW = true;
-                if (isAuto < 0.75) isAuto += 0.005;
+                increaseAuto();
                 return;
             }
         } else if (workTime < timer && arrivalTime > timer) {
@@ -64,7 +71,7 @@ void Order::notifyExternist() {
             Wait(workTime);
             Release(Externist);
             hasSW = true;
-            if (isAuto < 0.75) isAuto += 0.005;
+            increaseAuto();
             Wait(arrivalTime - workTime);
             return;
         } else if (workTime > timer && arrivalTime < timer) {
@@ -81,7 +88,7 @@ void Order::notifyExternist() {
                 Wait(workTime);
                 Release(Externist);
                 hasSW = true;
-                if (isAuto < 0.75) isAuto += 0.005;
+                increaseAuto();
                 Wait(arrivalTime - workTime);
                 return;
             } else {
@@ -96,21 +103,25 @@ void Order::notifyExternist() {
     }
 }
 
+void Order::increaseAuto() {
+    if (isAuto < 0.75) isAuto += AUTO_INCREASE;
+}
+
 void Order::Behavior() {
     if (!isPriority && (Random() < PROB_NOT_ACCREDITED || OrderQueue.Length() >= ORDER_QUEUE_SIZE)) {
-        handleRejectedOrder();
+        RejectedOrders++;
         return;
     }
 
-//    if (!Externist.Busy()) {
-//        notifyExternist();
-//    } else {
-//        waitForArrival();
-//    }
-    waitForArrival();
+    if (!Externist.Busy()) {
+        notifyExternist();
+    } else {
+        waitForArrival();
+    }
 
     start = Time;
 
+    secondLife:
     while (!acquireWorkerOrManager()) {
         Passivate();
     }
@@ -120,15 +131,10 @@ void Order::Behavior() {
     if (CatastrophicFailure) {
         return;
     }
+    returnReferenceDevice();
     releaseResources();
     finalizeOrder(start);
     processNextOrderInQueue();
-}
-
-
-void Order::handleRejectedOrder() {
-    RejectedOrders++;
-    Passivate();
 }
 
 
@@ -164,8 +170,9 @@ void Order::intoQueue() {
                 return;
             }
         }
+        Into(OrderQueue);
     } else {
-        Into(OrderQueue); // Add at the end for non-priority
+        Into(OrderQueue);
     }
 }
 
@@ -202,8 +209,6 @@ void Order::performCalibration() {
     if (Random() < PROB_RESULT_NOT_OK) {
         Wait(Exponential(TIME_TWEAK));
     }
-
-    returnReferenceDevice();
 }
 
 
@@ -233,53 +238,54 @@ void Order::handleCalibrationError(double timeOfCalibration) {
 void Order::handleCatastrophicError() {
     // Handle catastrophic errors if necessary
     CatastrophicFailures++;
-    if (CatastrophicFailure) {
+    if (KATASTROFAZNOVU) {
         printf("do satka, opetovna katastrofa");
     }
     CatastrophicFailure = true;
     double machineFailure = Random();
 
-    if (machineFailure < PROB_SINGLEDEV_BROKE - PROB_ERROR_BOTH) {
-        // Reference device failure only (45%: 0-45)
-        handleReferenceDeviceFailure();
-    } else if (machineFailure < 2*(PROB_SINGLEDEV_BROKE - PROB_ERROR_BOTH)) {
-        // Order failure only (45%: 45-90)
-        handleOrderFailure();
-    } else {
-        // Both fail (10%: 90-100)
-        BothFailuresCatastrophy++;
-        handleBothFailure();
-    }
+    handleReferenceDeviceFailure();
+
+
+    // if (machineFailure < PROB_SINGLEDEV_BROKE - PROB_ERROR_BOTH) {
+    //     // Reference device failure only (45%: 0-45)
+    //     // handleReferenceDeviceFailure();
+    // } else if (machineFailure < 2*(PROB_SINGLEDEV_BROKE - PROB_ERROR_BOTH)) {
+    //     // Order failure only (45%: 45-90)
+    //     handleOrderFailure();
+    // } else {
+    //     // Both fail (10%: 90-100)
+    //     BothFailuresCatastrophy++;
+    //     // handleBothFailure();
+    // }
 }
 
 void Order::handleBothFailure() {
-    (new ReferenceDeviceFailure(isPrecise))->Activate();
     releaseResources();
+    returnReferenceDevice();
+    (new ReferenceDeviceFailure(isPrecise))->Activate();
     processNextOrderInQueue();
 } 
 
 void Order::handleOrderFailure() {
-
-    returnReferenceDevice();
     releaseResources();
+    returnReferenceDevice();
     processNextOrderInQueue();
 }
 
 void Order::handleReferenceDeviceFailure() {
     // order goes to the first position in the queue
-    (new ReferenceDeviceFailure(isPrecise))->Activate();
     releaseResources();
+    returnReferenceDevice();
+    (new ReferenceDeviceFailure(isPrecise))->Activate();
 
     // druhy zivot zakazky az do skoncovani (zadna treti sance)
+    isWorkedOnByManager = false;
+    CatastrophicFailure = false;
+    KATASTROFAZNOVU = true;
     isPriority = UBER_PRIORITY;
-    intoQueue();
-    Passivate();
-
-    useReferenceDevice();
-    performCalibration();
-    releaseResources();
-    finalizeOrder(start);
-    processNextOrderInQueue();
+    goto secondLife;
+    // druhy zivot zakazky az do skoncovani (zadna treti sance)
 }
 
 void Order::releaseResources() {
@@ -292,22 +298,18 @@ void Order::releaseResources() {
 
 
 void Order::finalizeOrder(double start) {
-    if (!Manager.Busy()) {
-        Seize(Manager, 1);
-        Wait(Exponential(TIME_WRITE_REPORT));
-        Release(Manager);
-    } else {
-        // If the manager is busy, move the order to the ManagerQueue
+    while (Manager.Busy()) {
         Into(ManagerQueue);
         Passivate();
     }
-
-    // Activate the next order waiting in the ManagerQueue, if any
+    Seize(Manager, 1);
+    Wait(Exponential(TIME_WRITE_REPORT));
+    Release(Manager);
+    
     if (!ManagerQueue.Empty()) {
         ManagerQueue.GetFirst()->Activate();
     }
 
-    // Record processing time and update statistics
     ProcessingTime(Time - start);
     ProcessedOrders++;
 }

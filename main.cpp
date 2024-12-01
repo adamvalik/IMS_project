@@ -32,6 +32,7 @@ int BothFailuresCatastrophy = 0;
 
 class OrderGenerator : public Event {
     void Behavior() {
+        // SATEK: potrebujem teda bool nebo int?
         (new Order(Random() < PROB_PRIORITY ? 1 : 0, Random() < PROB_PRECISE, Random() < isAuto))->Activate();
         Activate(Time + Exponential(TIME_ORDER_GENERATION));
     }

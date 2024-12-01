@@ -72,8 +72,8 @@ private:
     bool isWorkedOnByManager = false;
 
     bool CatastrophicFailure = false;
+    bool KATASTROFAZNOVU = false;
 
-    void handleRejectedOrder();
     void waitForArrival();
     bool acquireWorkerOrManager();
     void useReferenceDevice();
@@ -88,6 +88,7 @@ private:
     void handleBothFailure();
     void intoQueue();
     void returnReferenceDevice();
+    void increaseAuto();
 
     void notifyExternist();
 
