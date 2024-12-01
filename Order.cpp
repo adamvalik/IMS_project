@@ -7,6 +7,13 @@ public:
     ReferenceDeviceFailure(bool precise) : isPrecise(precise) {}
 
     void Behavior() {
+
+        if (isPrecise) {
+            Enter(PreciseRefDev, 1);
+        } else {
+            Enter(UnpreciseRefDev, 1);
+        }
+
         Wait(Exponential(TIME_REFDEV_FAILURE_REPAIR));
 
         if (isPrecise) {
@@ -102,11 +109,12 @@ void Order::Behavior() {
         return;
     }
 
-    if (!Externist.Busy()) {
-        notifyExternist();
-    } else {
-        waitForArrival();
-    }
+//    if (!Externist.Busy()) {
+//        notifyExternist();
+//    } else {
+//        waitForArrival();
+//    }
+    waitForArrival();
 
     start = Time;
 
@@ -168,6 +176,13 @@ void Order::intoQueue() {
     }
 }
 
+void Order::returnReferenceDevice() {
+    if (isPrecise) {
+        Leave(PreciseRefDev, 1);
+    } else {
+        Leave(UnpreciseRefDev, 1);
+    }
+}
 
 void Order::useReferenceDevice() {
     if (isPrecise) {
@@ -195,11 +210,7 @@ void Order::performCalibration() {
         Wait(Exponential(TIME_TWEAK));
     }
 
-    if (isPrecise) {
-        Leave(PreciseRefDev, 1);
-    } else {
-        Leave(UnpreciseRefDev, 1);
-    }
+    returnReferenceDevice();
 }
 
 
@@ -256,11 +267,7 @@ void Order::handleBothFailure() {
 
 void Order::handleOrderFailure() {
 
-    if (isPrecise) {
-        Leave(PreciseRefDev, 1);
-    } else {
-        Leave(UnpreciseRefDev, 1);
-    }
+    returnReferenceDevice();
 
     releaseResources();
     processNextOrderInQueue();
@@ -268,19 +275,23 @@ void Order::handleOrderFailure() {
 
 void Order::handleReferenceDeviceFailure() {
     // order goes to the first position in the queue
+    returnReferenceDevice();
+    releaseResources();
     (new ReferenceDeviceFailure(isPrecise))->Activate();
-    releaseResources();
-    
-    // druhy zivot zakazky az do skoncovani (zadna treti sance)
-    isPriority = UBER_PRIORITY;
-    intoQueue();
-    Passivate();
 
-    useReferenceDevice();
-    performCalibration();
-    releaseResources();
-    finalizeOrder(start);
-    processNextOrderInQueue();
+//    // druhy zivot zakazky az do skoncovani (zadna treti sance)
+//    isPriority = UBER_PRIORITY;
+//    intoQueue();
+//    Passivate();
+//    isWorkedOnByManager = false;
+//    while (!acquireWorkerOrManager()) {
+//        Passivate();
+//    }
+//    useReferenceDevice();
+//    performCalibration();
+//    releaseResources();
+//    finalizeOrder(start);
+//    processNextOrderInQueue();
 }
 
 void Order::releaseResources() {

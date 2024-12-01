@@ -87,7 +87,7 @@ private:
     void handleOrderFailure();
     void handleBothFailure();
     void intoQueue();
-
+    void returnReferenceDevice();
 
     void notifyExternist();
 
