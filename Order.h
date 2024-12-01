@@ -39,7 +39,7 @@ public:
      * @param priority
      * @param precision
      */
-    Order(bool priority, bool precision, bool isAuto) : isPriority(priority), isPrecise(precision), hasSW(isAuto) {}
+    Order(int priority, bool precision, bool isAuto) : isPriority(priority), isPrecise(precision), hasSW(isAuto) {}
 
     /**
      * @brief Destroy the Order object
@@ -56,7 +56,7 @@ private:
     /**
      * @brief Bool representing whether the order shall be treated as priority
      */
-    bool isPriority;
+    int isPriority;
 
     /**
      * @brief Bool representing whether the order shall be treated as in need of a precise reference device
@@ -68,23 +68,26 @@ private:
      */
     bool hasSW;
 
+    double start = 0.0;
     bool isWorkedOnByManager = false;
 
     bool CatastrophicFailure = false;
 
     void handleRejectedOrder();
     void waitForArrival();
-    bool acquireWorkerOrManager(bool& isManager);
+    bool acquireWorkerOrManager();
     void useReferenceDevice();
     void performCalibration();
     void handleCalibrationError(double timeOfCalibration);
-    void releaseResources(bool isManager);
+    void releaseResources();
     void finalizeOrder(double start);
     void processNextOrderInQueue();
     void handleCatastrophicError();
     void handleReferenceDeviceFailure();
     void handleOrderFailure();
     void handleBothFailure();
+    void intoQueue();
+
 
     void notifyExternist();
 

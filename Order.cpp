@@ -17,23 +17,82 @@ public:
     }
 };
 
+class Dodelavka : public Process {
+    double workTime;
+    double timer;
+
+public:
+    Dodelavka(double workTime, double timer) : workTime(workTime), timer(timer) {}
+
+
+    void Behavior() {
+        Seize(Externist); // check ze na externistu neexistuje fronta
+        Wait(workTime - timer);
+        if (isAuto < 0.75) isAuto += 0.005;
+        Release(Externist);
+    }
+};
+
 void Order::notifyExternist() {
-    if (!Externist.Busy()) {
+    if (hasSW) {
+        waitForArrival();
+        return;
+    } else { // hasSW = false && externist not busy
         Seize(Externist);
-        double remainingTime = 9 * 8;
-        while (remainingTime > 0) {
-            double workTime = Exponential(24);
-            if (workTime > remainingTime) {
-                Wait(remainingTime);
-                hasSW = false;
-                break;
-            } else {
+        double workTime = Exponential(3 * 24);
+        double arrivalTime = Exponential(2 * 24);
+        double timer = Exponential(9 * 24);
+
+        if (workTime < timer && arrivalTime < timer) {
+            // normalni
+            if (workTime < arrivalTime) {
                 Wait(workTime);
-                remainingTime -= workTime;
+                Release(Externist);
                 hasSW = true;
+                if (isAuto < 0.75) isAuto += 0.005;
+                Wait(arrivalTime - workTime);
+                return;
+            } else { // arrivalTime < workTime
+                Wait(workTime);
+                Release(Externist);
+                hasSW = true;
+                if (isAuto < 0.75) isAuto += 0.005;
+                return;
+            }
+        } else if (workTime < timer && arrivalTime > timer) {
+            // pracovnik jde na dalsi, sw ceka na zakazku
+            Wait(workTime);
+            Release(Externist);
+            hasSW = true;
+            if (isAuto < 0.75) isAuto += 0.005;
+            Wait(arrivalTime - workTime);
+            return;
+        } else if (workTime > timer && arrivalTime < timer) {
+            // zakazka se jde zpracovat manulane, sw se hodi do portfolia jak se dodela
+            Wait(timer);
+            hasSW = false;
+            Release(Externist);
+            (new Dodelavka(workTime, timer))->Activate();
+            return;
+        } else {
+            // obe byly pozdeji nez timer
+            if (workTime < arrivalTime) {
+                // pracovnik jde na dalsi, sw ceka na zakazku
+                Wait(workTime);
+                Release(Externist);
+                hasSW = true;
+                if (isAuto < 0.75) isAuto += 0.005;
+                Wait(arrivalTime - workTime);
+                return;
+            } else {
+                // zakazka se jde zpracovat manulane, sw se hodi do portfolia jak se dodela
+                Wait(arrivalTime);
+                hasSW = false;
+                Release(Externist);
+                (new Dodelavka(workTime, timer))->Activate();
+                return;
             }
         }
-        Release(Externist);
     }
 }
 
@@ -43,24 +102,24 @@ void Order::Behavior() {
         return;
     }
 
-    notifyExternist();
+    if (!Externist.Busy()) {
+        notifyExternist();
+    } else {
+        waitForArrival();
+    }
 
-    waitForArrival();
+    start = Time;
 
-    double start = Time;
-    bool isManager = false;
-
-    while (!acquireWorkerOrManager(isManager)) {
+    while (!acquireWorkerOrManager()) {
         Passivate();
     }
 
     useReferenceDevice();
     performCalibration();
-    // TODO: TOTO ASI NEFACHCI
-    if (CatastrophicFailure){
+    if (CatastrophicFailure) {
         return;
     }
-    releaseResources(isManager);
+    releaseResources();
     finalizeOrder(start);
     processNextOrderInQueue();
 }
@@ -77,28 +136,35 @@ void Order::waitForArrival() {
 }
 
 
-bool Order::acquireWorkerOrManager(bool& isManager) {
+bool Order::acquireWorkerOrManager() {
     if (!Workers.Full()) {
         Enter(Workers, 1);
-        isManager = false;
+        isWorkedOnByManager = false;
         return true;
     } else if (!Manager.Busy()) {
         Seize(Manager, 0);
-        isManager = true;
         isWorkedOnByManager = true;
         return true;
     } else {
-        if (isPriority) {
-            // Insert before the first non-priority order
-            for (auto it = OrderQueue.begin(); it != OrderQueue.end(); ++it) {
-                if (!dynamic_cast<Order*>(*it)->isPriority) {
-                    OrderQueue.PredIns(this, it);
-                    return false;
-                }
+        intoQueue();
+        return false;
+    }
+}
+
+void Order::intoQueue() {
+    if (isPriority == UBER_PRIORITY) {
+        OrderQueue.InsFirst(this);
+    }
+    else if (isPriority == 1) {
+        // Insert before the first non-priority order
+        for (auto it = OrderQueue.begin(); it != OrderQueue.end(); ++it) {
+            if (!dynamic_cast<Order*>(*it)->isPriority) {
+                OrderQueue.PredIns(this, it);
+                return;
             }
         }
+    } else {
         Into(OrderQueue); // Add at the end for non-priority
-        return false;
     }
 }
 
@@ -163,6 +229,9 @@ void Order::handleCalibrationError(double timeOfCalibration) {
 void Order::handleCatastrophicError() {
     // Handle catastrophic errors if necessary
     CatastrophicFailures++;
+    if (CatastrophicFailure) {
+        printf("do satka, opetovna katastrofa");
+    }
     CatastrophicFailure = true;
     double machineFailure = Random();
 
@@ -173,7 +242,7 @@ void Order::handleCatastrophicError() {
         // Order failure only (45%: 45-90)
         handleOrderFailure();
     } else {
-        // Both fail (10%: 90-100) TODO: THIS MIGHT NOT BE CORRECT AS THEY WORK WITH SAME RESOURCE
+        // Both fail (10%: 90-100)
         BothFailuresCatastrophy++;
         handleBothFailure();
     }
@@ -181,9 +250,9 @@ void Order::handleCatastrophicError() {
 
 void Order::handleBothFailure() {
     (new ReferenceDeviceFailure(isPrecise))->Activate();
-    releaseResources(isWorkedOnByManager);
-    Passivate();
-}
+    releaseResources();
+    processNextOrderInQueue();
+} 
 
 void Order::handleOrderFailure() {
 
@@ -193,24 +262,29 @@ void Order::handleOrderFailure() {
         Leave(UnpreciseRefDev, 1);
     }
 
-    releaseResources(isWorkedOnByManager);
-
-    // Remove the order permanently from the system
-    Passivate();
+    releaseResources();
+    processNextOrderInQueue();
 }
 
 void Order::handleReferenceDeviceFailure() {
     // order goes to the first position in the queue
     (new ReferenceDeviceFailure(isPrecise))->Activate();
-    releaseResources(isWorkedOnByManager);
-    OrderQueue.InsFirst(this);
+    releaseResources();
+    
+    // druhy zivot zakazky az do skoncovani (zadna treti sance)
+    isPriority = UBER_PRIORITY;
+    intoQueue();
     Passivate();
+
+    useReferenceDevice();
+    performCalibration();
+    releaseResources();
+    finalizeOrder(start);
     processNextOrderInQueue();
-    //TODO: Nebije se to s returnem v Behavioru?
 }
 
-void Order::releaseResources(bool isManager) {
-    if (isManager) {
+void Order::releaseResources() {
+    if (isWorkedOnByManager) {
         Release(Manager);
     } else {
         Leave(Workers, 1);
