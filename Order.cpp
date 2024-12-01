@@ -7,13 +7,6 @@ public:
     ReferenceDeviceFailure(bool precise) : isPrecise(precise) {}
 
     void Behavior() {
-
-        if (isPrecise) {
-            Enter(PreciseRefDev, 1);
-        } else {
-            Enter(UnpreciseRefDev, 1);
-        }
-
         Wait(Exponential(TIME_REFDEV_FAILURE_REPAIR));
 
         if (isPrecise) {
@@ -46,9 +39,9 @@ void Order::notifyExternist() {
         return;
     } else { // hasSW = false && externist not busy
         Seize(Externist);
-        double workTime = Exponential(3 * 24);
-        double arrivalTime = Exponential(2 * 24);
-        double timer = Exponential(9 * 24);
+        double workTime = Exponential(3 * 8);
+        double arrivalTime = Exponential(2 * 8);
+        double timer = Exponential(9 * 8);
 
         if (workTime < timer && arrivalTime < timer) {
             // normalni
@@ -268,30 +261,25 @@ void Order::handleBothFailure() {
 void Order::handleOrderFailure() {
 
     returnReferenceDevice();
-
     releaseResources();
     processNextOrderInQueue();
 }
 
 void Order::handleReferenceDeviceFailure() {
     // order goes to the first position in the queue
-    returnReferenceDevice();
-    releaseResources();
     (new ReferenceDeviceFailure(isPrecise))->Activate();
+    releaseResources();
 
-//    // druhy zivot zakazky az do skoncovani (zadna treti sance)
-//    isPriority = UBER_PRIORITY;
-//    intoQueue();
-//    Passivate();
-//    isWorkedOnByManager = false;
-//    while (!acquireWorkerOrManager()) {
-//        Passivate();
-//    }
-//    useReferenceDevice();
-//    performCalibration();
-//    releaseResources();
-//    finalizeOrder(start);
-//    processNextOrderInQueue();
+    // druhy zivot zakazky az do skoncovani (zadna treti sance)
+    isPriority = UBER_PRIORITY;
+    intoQueue();
+    Passivate();
+
+    useReferenceDevice();
+    performCalibration();
+    releaseResources();
+    finalizeOrder(start);
+    processNextOrderInQueue();
 }
 
 void Order::releaseResources() {
