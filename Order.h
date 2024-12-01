@@ -72,7 +72,7 @@ private:
     bool isWorkedOnByManager = false;
 
     bool CatastrophicFailure = false;
-    bool KATASTROFAZNOVU = false;
+    bool secondLife = false;
 
     void waitForArrival();
     bool acquireWorkerOrManager();

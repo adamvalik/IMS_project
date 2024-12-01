@@ -35,7 +35,7 @@ public:
     void Behavior() {
         Seize(Externist); // check ze na externistu neexistuje fronta
         Wait(workTime - timer);
-        if (isAuto < 0.75) isAuto += AUTO_INCREASE;
+        if (isAuto < AUTO_TOP) isAuto += AUTO_INCREASE;
         Release(Externist);
     }
 };
@@ -104,7 +104,7 @@ void Order::notifyExternist() {
 }
 
 void Order::increaseAuto() {
-    if (isAuto < 0.75) isAuto += AUTO_INCREASE;
+    if (isAuto < AUTO_TOP) isAuto += AUTO_INCREASE;
 }
 
 void Order::Behavior() {
@@ -121,13 +121,23 @@ void Order::Behavior() {
 
     start = Time;
 
-    secondLife:
+
     while (!acquireWorkerOrManager()) {
         Passivate();
     }
 
     useReferenceDevice();
     performCalibration();
+    if (secondLife) {
+        while (!acquireWorkerOrManager()) {
+            Passivate();
+        }
+
+        CatastrophicFailure = false;
+        useReferenceDevice();
+        performCalibration();
+    }
+        
     if (CatastrophicFailure) {
         return;
     }
@@ -238,26 +248,23 @@ void Order::handleCalibrationError(double timeOfCalibration) {
 void Order::handleCatastrophicError() {
     // Handle catastrophic errors if necessary
     CatastrophicFailures++;
-    if (KATASTROFAZNOVU) {
+    if (secondLife) {
         printf("do satka, opetovna katastrofa");
     }
     CatastrophicFailure = true;
     double machineFailure = Random();
 
-    handleReferenceDeviceFailure();
-
-
-    // if (machineFailure < PROB_SINGLEDEV_BROKE - PROB_ERROR_BOTH) {
-    //     // Reference device failure only (45%: 0-45)
-    //     // handleReferenceDeviceFailure();
-    // } else if (machineFailure < 2*(PROB_SINGLEDEV_BROKE - PROB_ERROR_BOTH)) {
-    //     // Order failure only (45%: 45-90)
-    //     handleOrderFailure();
-    // } else {
-    //     // Both fail (10%: 90-100)
-    //     BothFailuresCatastrophy++;
-    //     // handleBothFailure();
-    // }
+    if (machineFailure < PROB_SINGLEDEV_BROKE - PROB_ERROR_BOTH) {
+        // Reference device failure only (45%: 0-45)
+        handleReferenceDeviceFailure();
+    } else if (machineFailure < 2*(PROB_SINGLEDEV_BROKE - PROB_ERROR_BOTH)) {
+        // Order failure only (45%: 45-90)
+        handleOrderFailure();
+    } else {
+        // Both fail (10%: 90-100)
+        BothFailuresCatastrophy++;
+        handleBothFailure();
+    }
 }
 
 void Order::handleBothFailure() {
@@ -281,10 +288,8 @@ void Order::handleReferenceDeviceFailure() {
 
     // druhy zivot zakazky az do skoncovani (zadna treti sance)
     isWorkedOnByManager = false;
-    CatastrophicFailure = false;
-    KATASTROFAZNOVU = true;
     isPriority = UBER_PRIORITY;
-    goto secondLife;
+    secondLife = true;
     // druhy zivot zakazky az do skoncovani (zadna treti sance)
 }
 
