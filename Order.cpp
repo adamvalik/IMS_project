@@ -70,9 +70,7 @@ void Order::Behavior() {
         return;
     }
 
-    bool isExternist = true; // switch for the modes w/ | w/o externist
-
-    if (isExternist) {
+    if (EXTERNIST) {
         if (!Externist.Busy()) {
             notifyExternist();
         } else {
