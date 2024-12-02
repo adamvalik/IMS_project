@@ -31,6 +31,8 @@
 #define AUTO_INCREASE 0.002
 #define AUTO_TOP 0.75
 
+#define EXTERNIST true // switch for the modes w/ | w/o externist
+
 #define TIME_ORDER_GENERATION 4
 #define TIME_ORDER_ARRIVAL (2 * 8)
 #define TIME_AUTO_CALIBRATION 8
