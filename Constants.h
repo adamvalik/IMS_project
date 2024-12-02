@@ -1,12 +1,17 @@
-//
-// Created by marek on 29.11.2024.
-//
+/**
+ * @file Constants.h
+ * @brief Constants for the simulation
+ * 
+ * @authors Adam Valík (xvalik05), Marek Effenberger (xeffen00)
+ * 
+*/
 
 #ifndef IMS_PROJECT_CONSTANTS_H
 #define IMS_PROJECT_CONSTANTS_H
 
-#define DAYS_SIMULATION 30*365
-#define HOURS_SIMULATION (DAYS_SIMULATION * 8)
+// in the simulation, the day is 8 hours long (meaning working hours)
+#define YEARS_SIMULATION 30
+#define HOURS_SIMULATION (YEARS_SIMULATION * 365 * 8)
 
 #define NUM_WORKERS 3
 
@@ -27,17 +32,20 @@
 #define AUTO_TOP 0.75
 
 #define TIME_ORDER_GENERATION 4
-#define TIME_ORDER_ARRIVAL 16
+#define TIME_ORDER_ARRIVAL (2 * 8)
 #define TIME_AUTO_CALIBRATION 8
 #define TIME_MANUAL_CALIBRATION 14
 #define TIME_REPAIR 1
 #define TIME_TWEAK 1
 #define TIME_WRITE_REPORT 1
-#define TIME_RECALIBRATION_GENERATION (8 * 365 * 2) / ((numPreciseRefDev) + (numUnpreciseRefDev))
-#define TIME_RECALIBRATION (8 * 4)
-#define TIME_REFDEV_FAILURE_REPAIR (8 * 7)
+#define TIME_RECALIBRATION_GENERATION (2 * 8 * 365) / ((numPreciseRefDev) + (numUnpreciseRefDev))
+#define TIME_RECALIBRATION (4 * 8)
+#define TIME_REFDEV_FAILURE_REPAIR (7 * 8)
+#define TIME_EXTERNIST_WORK (4 * 8)
 
+// probability that the lab has automatic calibration software for the incoming order
 extern double isAuto;
+
 extern int numPreciseRefDev;
 extern int numUnpreciseRefDev;
 

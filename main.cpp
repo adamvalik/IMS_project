@@ -1,17 +1,22 @@
+/**
+ * @file main.cpp
+ * @brief Main file for the simulation
+ * 
+ * @authors Adam Valík (xvalik05), Marek Effenberger (xeffen00)
+ * 
+*/
+
 #include "simlib.h"
 #include <iostream>
 #include "Order.h"
 #include "Constants.h"
-
 
 double isAuto = 0.2;
 int numPreciseRefDev = 2;
 int numUnpreciseRefDev = 10;
 
 Facility Manager("Manager");
-
 Facility Externist("Externist");
-
 Store Workers("Workers", NUM_WORKERS);
 Queue OrderQueue("OrderQueue");
 Queue ManagerQueue("ManagerQueue");
@@ -22,13 +27,13 @@ Store UnpreciseRefDev("UnpreciseRefDev", numUnpreciseRefDev);
 Stat ProcessingTime("Processing time");
 Stat PriorityWaitTime("Priority wait time");
 
+// statistics
 int RejectedOrders = 0;
 int ProcessedOrders = 0;
 int Errors = 0;
 int Recalibrations = 0;
 int CatastrophicFailures = 0;
 int BothFailuresCatastrophy = 0;
-
 
 class OrderGenerator : public Event {
     void Behavior() {
@@ -69,21 +74,17 @@ class RecalibrationGenerator : public Event {
 };
 
 int main() {
-    // Initialize the simulation (time from 0 to 24 hours)
     Init(0, HOURS_SIMULATION);
 
-    // Activate the order generator
     (new OrderGenerator())->Activate();
     (new RecalibrationGenerator())->Activate();
 
-    // Run the simulation
     Run();
 
-    // Outputs
     Externist.Output();
     Manager.Output();
-    Workers.Output(); // Output for workers
-    OrderQueue.Output(); // Output for the worker queue
+    Workers.Output();
+    OrderQueue.Output();
     ProcessingTime.Output();
     PriorityWaitTime.Output();
     PreciseRefDev.Output();
