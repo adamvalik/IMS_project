@@ -21,7 +21,7 @@ $(EXEC): $(OBJ)
 clean:
 	rm -f *.o $(EXEC)
 
-run: clean all
+run: all
 	./$(EXEC)
 
 pack: clean

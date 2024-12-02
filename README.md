@@ -1,1 +1,1 @@
-kalibracni laborator
+kalibratoř
