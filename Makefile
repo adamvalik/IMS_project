@@ -25,4 +25,4 @@ run: all
 	./$(EXEC)
 
 pack: clean
-	zip -rv	04_xeffen00_xvalik05.zip Makefile *.cpp *.hpp doc.pdf
+	zip -rv	04_xeffen00_xvalik05.zip Makefile *.cpp *.h doc.pdf -x ".DS_Store"

@@ -171,4 +171,6 @@ private:
      * @brief Notify the externist about the order
      */
     void notifyExternist();
-}
+};
+
+#endif //IMS_PROJECT_ORDER_H

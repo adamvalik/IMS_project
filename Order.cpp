@@ -115,7 +115,7 @@ void Order::Behavior() {
 
 void Order::notifyExternist() {
     if (hasSW) { // check if the SW already exists
-        waitForArrival();
+        Wait(Exponential(TIME_ORDER_ARRIVAL));
         return;
     } else { // hasSW = false && externist not busy
         Seize(Externist);
