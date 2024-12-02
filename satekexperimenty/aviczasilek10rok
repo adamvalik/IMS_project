@@ -559,7 +559,8 @@ marek@a04-0730a:~/IMS_project$ ./lab
 |  Minimal time = 0.000841658                              |
 |  Maximal time = 182.652                                  |
 |  Average time = 14.6475                                  |
-|  Standard deviation = 21.8368                            |
+|  Standard devi
+ation = 21.8368                            |
 +----------------------------------------------------------+
 Number of processed orders: 8958
 Number of rejected orders: 2520
