@@ -447,12 +447,12 @@ marek@a04-0730a:~/IMS_project$ ./lab
 |  Average time = 14.6666                                  |
 |  Standard deviation = 18.8684                            |
 +----------------------------------------------------------+
-Number of processed orders: 3298
-Number of rejected orders: 229
-Number of errors: 162
-Number of recalibrations: 45
-Number of catastrophic failures: 18
-Number of both failures catastrophies: 4
+Number of processed orders: 3473
+Number of rejected orders: 208
+Number of errors: 182
+Number of recalibrations: 30
+Number of catastrophic failures: 23
+Number of both failures catastrophies: 2
 Auto calibration probability: 0.75
 marek@a04-0730a:~/IMS_project$ ./lab
 +----------------------------------------------------------+
