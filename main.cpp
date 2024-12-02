@@ -10,6 +10,7 @@
 #include <iostream>
 #include "Order.h"
 #include "Constants.h"
+#include <ctime>
 
 double isAuto = 0.2;
 int numPreciseRefDev = 2;
@@ -75,6 +76,8 @@ class RecalibrationGenerator : public Event {
 
 int main() {
     Init(0, HOURS_SIMULATION);
+
+    RandomSeed(time(NULL));
 
     (new OrderGenerator())->Activate();
     (new RecalibrationGenerator())->Activate();
