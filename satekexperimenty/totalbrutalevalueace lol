@@ -1,0 +1,358 @@
+typicka1rok
+
+avg. number of processed orders: 612.2
+avg. number of rejected orders: 105.2
+avg. number of errors: 31.6
+avg. number of recalibrations: 7.6
+avg. number of catastrophic failures: 2.8
+avg. number of both failures catastrophies: 0.0
+
+
+
++----------------------------------------------------------+
+| QUEUE OrderQueue                                         |
++----------------------------------------------------------+
+|  Maximal length = 22                                    |
+|  Maximal time = 261.0368                                |
+|  Average time = 49.42                                 |
+
++----------------------------------------------------------+
++----------------------------------------------------------+
+| STATISTIC Processing time                                |
++----------------------------------------------------------+
+Max = 535.38           |
+|  Average value = 71.627                                |
++----------------------------------------------------------+
++----------------------------------------------------------+
+| QUEUE ManagerQueue                                       |
++----------------------------------------------------------+
+|  Maximal length = 22                                     |
+|  Average length = 3.12                               |
+|  Maximal time = 172.13                                 |
+|  Average time = 23.68                                  |
++----------------------------------------------------------+
+
+typicka5rok
+
+
+
+Average number of processed orders: 3107.2
+Average number of rejected orders: 472.6
+Average number of errors: 159.0
+Average number of recalibrations: 27.0
+Average number of catastrophic failures: 15.2
+Average number of both failures catastrophies: 1.4
+
++----------------------------------------------------------+
+| STORE Workers                                            |
++----------------------------------------------------------+
+|  Average used capacity = 2.212                         |
++----------------------------------------------------------+
+
++----------------------------------------------------------+
+| QUEUE OrderQueue                                         |
++----------------------------------------------------------+
+|  Maximal length = 26                                    |
+|  Maximal time = 362                                |
+|  Average time = 45                                 |
+
++----------------------------------------------------------+
++----------------------------------------------------------+
+| STATISTIC Processing time                                |
++----------------------------------------------------------+
+Max = 781           |
+|  Average value = 62                               |
+
+STORE PreciseRefDev                                      |
++----------------------------------------------------------+
+|  Average used capacity = 0.52
++----------------------------------------------------------+
+| STORE UnpreciseRefDev                                    |
++----------------------------------------------------------+
+|  Maximal used capacity = 5.23                               |
+|  Average used capacity = 2.34                         |
++----------------------------------------------------------+
++----------------------------------------------------------+
+| QUEUE ManagerQueue                                       |
++----------------------------------------------------------+
+|  Maximal length = 26                                   |
+|  Average length = 2.91                              |
+|  Maximal time = 243                                |
+|  Average time = 21                                  |
++----------------------------------------------------------+
+
+typicka10rok
+
+
+
+Average number of processed orders: 6201.0
+Average number of rejected orders: 1219.2
+Average number of errors: 318.0
+Average number of recalibrations: 64.2
+Average number of catastrophic failures: 30.8
+Average number of both failures catastrophies: 2.8
+
++----------------------------------------------------------+
+| STORE Workers                                            |
++----------------------------------------------------------+
+|  Average used capacity = 2.212                         |
++----------------------------------------------------------+
+
++----------------------------------------------------------+
+| QUEUE OrderQueue                                         |
++----------------------------------------------------------+
+|  Maximal length = 27.75                                    |
+|  Maximal time = 389.334                                |
+|  Average time = 47                                 |
+
++----------------------------------------------------------+
++----------------------------------------------------------+
+| STATISTIC Processing time                                |
++----------------------------------------------------------+
+Max = 812.321          |
+|  Average value = 66                              |
+
+STORE PreciseRefDev                                      |
++----------------------------------------------------------+
+|  Average used capacity = 0.59
++----------------------------------------------------------+
+| STORE UnpreciseRefDev                                    |
++----------------------------------------------------------+
+|  Maximal used capacity = 5.23                               |
+|  Average used capacity = 2.34                         |
++----------------------------------------------------------+
++----------------------------------------------------------+
+| QUEUE ManagerQueue                                       |
++----------------------------------------------------------+
+|  Maximal length = 33                                   |
+|  Average length = 3.01                              |
+|  Maximal time = 312.21                                |
+|  Average time = 20                                  |
++----------------------------------------------------------+
+
+------------------------------------------------------------------------------------------------------------------------
+
+priority1rok
+
+
+
+Average number of processed orders: 654.8
+Average number of rejected orders: 50.2
+Average number of errors: 33.0
+Average number of recalibrations: 7.2
+Average number of catastrophic failures: 3.6
+Average number of both failures catastrophies: 0.6
+
+
++----------------------------------------------------------+
+
++----------------------------------------------------------+
+| QUEUE OrderQueue                                         |
++----------------------------------------------------------+
+|  Maximal length = 22.75                                    |
+|  Maximal time = 310.334                                |
+|  Average time = 39.33                                 |
+
++----------------------------------------------------------+
++----------------------------------------------------------+
+| STATISTIC Processing time                                |
++----------------------------------------------------------+
+Max = 527.67          |
+|  Average value = 61.6                              |
+
+
++----------------------------------------------------------+
++----------------------------------------------------------+
+| QUEUE ManagerQueue                                       |
++----------------------------------------------------------+
+|  Maximal length = 33                                   |
+|  Average length = 3.71                              |
+|  Maximal time = 189.12                               |
+|  Average time = 23                                  |
++----------------------------------------------------------+
+
+priority5rok
+
+
+
+Average number of processed orders: 3195.8
+Average number of rejected orders: 400.6
+Average number of errors: 165.4
+Average number of recalibrations: 30.6
+Average number of catastrophic failures: 14.4
+Average number of both failures catastrophies: 1.8
+
++----------------------------------------------------------+
+
++----------------------------------------------------------+
+| QUEUE OrderQueue                                         |
++----------------------------------------------------------+
+|  Maximal length = 30                                   |
+|  Maximal time = 612.334                                |
+|  Average time = 53.33                                 |
+
++----------------------------------------------------------+
++----------------------------------------------------------+
+| STATISTIC Processing time                                |
++----------------------------------------------------------+
+Max = 1310         |
+|  Average value = 73                              |
+
+
++----------------------------------------------------------+
++----------------------------------------------------------+
+| QUEUE ManagerQueue                                       |
++----------------------------------------------------------+
+|  Maximal length = 28                                   |
+|  Average length = 2.897                             |
+|  Maximal time = 167.2                               |
+|  Average time = 23                                  |
++----------------------------------------------------------+
+
+priority10rok
+
+
+
+Average number of processed orders: 6444.2
+Average number of rejected orders: 813.2
+Average number of errors: 324.4
+Average number of recalibrations: 68.6
+Average number of catastrophic failures: 35.0
+Average number of both failures catastrophies: 4.0
+
+
++----------------------------------------------------------+
+| QUEUE OrderQueue                                         |
++----------------------------------------------------------+
+|  Maximal length = 35                                  |
+|  Maximal time = 772.1                              |
+|  Average time = 53.72                                 |
+
++----------------------------------------------------------+
++----------------------------------------------------------+
+| STATISTIC Processing time                                |
++----------------------------------------------------------+
+Max = 1101.21         |
+|  Average value = 76                              |
+
+
++----------------------------------------------------------+
++----------------------------------------------------------+
+| QUEUE ManagerQueue                                       |
++----------------------------------------------------------+
+|  Maximal length = 52                                   |
+|  Average length = 3.5                             |
+|  Maximal time = 392.123                               |
+|  Average time = 22                                  |
++----------------------------------------------------------+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+viczasilek1rok
+
+
+
+Average number of processed orders: 666.8
+Average number of rejected orders: 463.8
+Average number of errors: 35.2
+Average number of recalibrations: 8.0
+Average number of catastrophic failures: 2.8
+Average number of both failures catastrophies: 0.0
+
++----------------------------------------------------------+
+| QUEUE OrderQueue                                         |
++----------------------------------------------------------+
+|  Maximal length = 28.21                                  |
+|  Maximal time = 291                              |
+|  Average time = 67.52                                 |
+
++----------------------------------------------------------+
++----------------------------------------------------------+
+| STATISTIC Processing time                                |
++----------------------------------------------------------+
+Max = 712.2        |
+|  Average value = 91                              |
+
+
++----------------------------------------------------------+
++----------------------------------------------------------+
+| QUEUE ManagerQueue                                       |
++----------------------------------------------------------+
+|  Maximal length = 24                                   |
+|  Average length = 3.56                             |
+|  Maximal time = 156.8                               |
+|  Average time = 18                                  |
++----------------------------------------------------------+
+
+viczasilek5rok
+
+
+
+Average number of processed orders: 3453.2
+Average number of rejected orders: 2382.8
+Average number of errors: 181.6
+Average number of recalibrations: 28.8
+Average number of catastrophic failures: 18.2
+Average number of both failures catastrophies: 2.8
+
++----------------------------------------------------------+
+| QUEUE OrderQueue                                         |
++----------------------------------------------------------+
+|  Maximal length = 32                                  |
+|  Maximal time = 462                              |
+|  Average time = 73                                 |
+
++----------------------------------------------------------+
++----------------------------------------------------------+
+| STATISTIC Processing time                                |
++----------------------------------------------------------+
+Max = 1101.2        |
+|  Average value = 103                              |
+
+
++----------------------------------------------------------+
++----------------------------------------------------------+
+| QUEUE ManagerQueue                                       |
++----------------------------------------------------------+
+|  Maximal length = 35                                   |
+|  Average length = 3.2                             |
+|  Maximal time = 284                               |
+|  Average time = 19                                  |
++----------------------------------------------------------+
+
+viczasilek10rok
+
+
+
+Average number of processed orders: 6885.0
+Average number of rejected orders: 4791.6
+Average number of errors: 332.4
+Average number of recalibrations: 59.8
+Average number of catastrophic failures: 35.6
+Average number of both failures catastrophies: 5.2
+
++----------------------------------------------------------+
+| QUEUE OrderQueue                                         |
++----------------------------------------------------------+
+|  Maximal length = 33                                  |
+|  Maximal time = 426.3                              |
+|  Average time = 75                                 |
+
++----------------------------------------------------------+
++----------------------------------------------------------+
+| STATISTIC Processing time                                |
++----------------------------------------------------------+
+Max = 1232.32       |
+|  Average value = 103                             |
+
+
++----------------------------------------------------------+
++----------------------------------------------------------+
+| QUEUE ManagerQueue                                       |
++----------------------------------------------------------+
+|  Maximal length = 33                                   |
+|  Average length = 3.4                             |
+|  Maximal time = 287                               |
+|  Average time = 19                                  |
++----------------------------------------------------------+
