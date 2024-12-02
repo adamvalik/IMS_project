@@ -1,0 +1,557 @@
+IMS_project$ ./lab
++----------------------------------------------------------+
+| FACILITY Externist                                       |
++----------------------------------------------------------+
+|  Status = not BUSY                                       |
+|  Time interval = 0 - 2920                                |
+|  Number of requests = 75                                 |
+|  Average utilization = 0.813942                          |
++----------------------------------------------------------+
+
++----------------------------------------------------------+
+| FACILITY Manager                                         |
++----------------------------------------------------------+
+|  Status = BUSY                                           |
+|  Time interval = 0 - 2920                                |
+|  Number of requests = 828                                |
+|  Average utilization = 0.983142                          |
++----------------------------------------------------------+
+
++----------------------------------------------------------+
+| STORE Workers                                            |
++----------------------------------------------------------+
+|  Capacity = 3  (1 used, 2 free)                          |
+|  Time interval = 0 - 2920                                |
+|  Number of Enter operations = 523                        |
+|  Minimal used capacity = 0                               |
+|  Maximal used capacity = 3                               |
+|  Average used capacity = 2.17992                         |
++----------------------------------------------------------+
+
++----------------------------------------------------------+
+| QUEUE OrderQueue                                         |
++----------------------------------------------------------+
+|  Time interval = 0 - 2920                                |
+|  Incoming  681                                           |
+|  Outcoming  657                                          |
+|  Current length = 24                                     |
+|  Maximal length = 28                                     |
+|  Average length = 16.9926                                |
+|  Minimal time = 0.00462069                               |
+|  Maximal time = 308.431                                  |
+|  Average time = 72.7143                                  |
+|  Standard deviation = 68.9608                            |
++----------------------------------------------------------+
++----------------------------------------------------------+
+| STATISTIC Processing time                                |
++----------------------------------------------------------+
+|  Min = 0.974693                Max = 705.263             |
+|  Number of records = 662                                 |
+|  Average value = 97.1327                                 |
+|  Standard deviation = 113.426                            |
++----------------------------------------------------------+
++----------------------------------------------------------+
+| STATISTIC Priority wait time                             |
++----------------------------------------------------------+
+|  no record                                               |
++----------------------------------------------------------+
++----------------------------------------------------------+
+| STORE PreciseRefDev                                      |
++----------------------------------------------------------+
+|  Capacity = 2  (0 used, 2 free)                          |
+|  Time interval = 0 - 2920                                |
+|  Number of Enter operations = 137                        |
+|  Minimal used capacity = 0                               |
+|  Maximal used capacity = 2                               |
+|  Average used capacity = 0.553948                        |
++----------------------------------------------------------+
+  Input queue 'PreciseRefDev.Q'
++----------------------------------------------------------+
+| QUEUE Q                                                  |
++----------------------------------------------------------+
+|  Time interval = 0 - 2920                                |
+|  Incoming  2                                             |
+|  Outcoming  2                                            |
+|  Current length = 0                                      |
+|  Maximal length = 1                                      |
+|  Average length = 0.00316708                             |
+|  Minimal time = 1.91824                                  |
+|  Maximal time = 7.32964                                  |
+|  Average time = 4.62394                                  |
++----------------------------------------------------------+
+
++----------------------------------------------------------+
+| STORE UnpreciseRefDev                                    |
++----------------------------------------------------------+
+|  Capacity = 10  (2 used, 8 free)                         |
+|  Time interval = 0 - 2920                                |
+|  Number of Enter operations = 558                        |
+|  Minimal used capacity = 0                               |
+|  Maximal used capacity = 5                               |
+|  Average used capacity = 2.45432                         |
++----------------------------------------------------------+
+
++----------------------------------------------------------+
+| QUEUE ManagerQueue                                       |
++----------------------------------------------------------+
+|  Time interval = 0 - 2920                                |
+|  Incoming  514                                           |
+|  Outcoming  493                                          |
+|  Current length = 21                                     |
+|  Maximal length = 21                                     |
+|  Average length = 3.42621                                |
+|  Minimal time = 0.0242426                                |
+|  Maximal time = 139.441                                  |
+|  Average time = 18.5506                                  |
+|  Standard deviation = 24.2707                            |
++----------------------------------------------------------+
+Number of processed orders: 662
+Number of rejected orders: 427
+Number of errors: 49
+Number of recalibrations: 3
+Number of catastrophic failures: 4
+Number of both failures catastrophies: 1
+Auto calibration probability: 0.35
+marek@a04-0730a:~/IMS_project$ ./lab
++----------------------------------------------------------+
+| FACILITY Externist                                       |
++----------------------------------------------------------+
+|  Status = BUSY                                           |
+|  Time interval = 0 - 2920                                |
+|  Number of requests = 75                                 |
+|  Average utilization = 0.821155                          |
++----------------------------------------------------------+
+
++----------------------------------------------------------+
+| FACILITY Manager                                         |
++----------------------------------------------------------+
+|  Status = BUSY                                           |
+|  Time interval = 0 - 2920                                |
+|  Number of requests = 924                                |
+|  Average utilization = 0.987936                          |
++----------------------------------------------------------+
+
++----------------------------------------------------------+
+| STORE Workers                                            |
++----------------------------------------------------------+
+|  Capacity = 3  (3 used, 0 free)                          |
+|  Time interval = 0 - 2920                                |
+|  Number of Enter operations = 562                        |
+|  Minimal used capacity = 0                               |
+|  Maximal used capacity = 3                               |
+|  Average used capacity = 2.25347                         |
++----------------------------------------------------------+
+
++----------------------------------------------------------+
+| QUEUE OrderQueue                                         |
++----------------------------------------------------------+
+|  Time interval = 0 - 2920                                |
+|  Incoming  749                                           |
+|  Outcoming  736                                          |
+|  Current length = 13                                     |
+|  Maximal length = 26                                     |
+|  Average length = 17.2136                                |
+|  Minimal time = 0.00938673                               |
+|  Maximal time = 356.44                                   |
+|  Average time = 67.7656                                  |
+|  Standard deviation = 68.8306                            |
++----------------------------------------------------------+
++----------------------------------------------------------+
+| STATISTIC Processing time                                |
++----------------------------------------------------------+
+|  Min = 0.618137                Max = 828.366             |
+|  Number of records = 740                                 |
+|  Average value = 97.2717                                 |
+|  Standard deviation = 116.181                            |
++----------------------------------------------------------+
++----------------------------------------------------------+
+| STATISTIC Priority wait time                             |
++----------------------------------------------------------+
+|  no record                                               |
++----------------------------------------------------------+
++----------------------------------------------------------+
+| STORE PreciseRefDev                                      |
++----------------------------------------------------------+
+|  Capacity = 2  (1 used, 1 free)                          |
+|  Time interval = 0 - 2920                                |
+|  Number of Enter operations = 165                        |
+|  Minimal used capacity = 0                               |
+|  Maximal used capacity = 2                               |
+|  Average used capacity = 0.606772                        |
++----------------------------------------------------------+
+  Input queue 'PreciseRefDev.Q'
++----------------------------------------------------------+
+| QUEUE Q                                                  |
++----------------------------------------------------------+
+|  Time interval = 0 - 2920                                |
+|  Incoming  3                                             |
+|  Outcoming  3                                            |
+|  Current length = 0                                      |
+|  Maximal length = 1                                      |
+|  Average length = 0.008876                               |
+|  Minimal time = 4.53285                                  |
+|  Maximal time = 12.4987                                  |
+|  Average time = 8.63931                                  |
++----------------------------------------------------------+
+
++----------------------------------------------------------+
+| STORE UnpreciseRefDev                                    |
++----------------------------------------------------------+
+|  Capacity = 10  (3 used, 7 free)                         |
+|  Time interval = 0 - 2920                                |
+|  Number of Enter operations = 585                        |
+|  Minimal used capacity = 0                               |
+|  Maximal used capacity = 5                               |
+|  Average used capacity = 2.45198                         |
++----------------------------------------------------------+
+
++----------------------------------------------------------+
+| QUEUE ManagerQueue                                       |
++----------------------------------------------------------+
+|  Time interval = 0 - 2920                                |
+|  Incoming  554                                           |
+|  Outcoming  554                                          |
+|  Current length = 0                                      |
+|  Maximal length = 31                                     |
+|  Average length = 4.62469                                |
+|  Minimal time = 0.0339315                                |
+|  Maximal time = 262.548                                  |
+|  Average time = 24.3756                                  |
+|  Standard deviation = 46.1005                            |
++----------------------------------------------------------+
+Number of processed orders: 740
+Number of rejected orders: 336
+Number of errors: 38
+Number of recalibrations: 4
+Number of catastrophic failures: 1
+Number of both failures catastrophies: 0
+Auto calibration probability: 0.348
+marek@a04-0730a:~/IMS_project$ ./lab
++----------------------------------------------------------+
+| FACILITY Externist                                       |
++----------------------------------------------------------+
+|  Status = BUSY                                           |
+|  Time interval = 0 - 2920                                |
+|  Number of requests = 75                                 |
+|  Average utilization = 0.808596                          |
++----------------------------------------------------------+
+
++----------------------------------------------------------+
+| FACILITY Manager                                         |
++----------------------------------------------------------+
+|  Status = BUSY                                           |
+|  Time interval = 0 - 2920                                |
+|  Number of requests = 879                                |
+|  Average utilization = 0.984079                          |
++----------------------------------------------------------+
+
++----------------------------------------------------------+
+| STORE Workers                                            |
++----------------------------------------------------------+
+|  Capacity = 3  (1 used, 2 free)                          |
+|  Time interval = 0 - 2920                                |
+|  Number of Enter operations = 539                        |
+|  Minimal used capacity = 0                               |
+|  Maximal used capacity = 3                               |
+|  Average used capacity = 2.29394                         |
++----------------------------------------------------------+
+
++----------------------------------------------------------+
+| QUEUE OrderQueue                                         |
++----------------------------------------------------------+
+|  Time interval = 0 - 2920                                |
+|  Incoming  706                                           |
+|  Outcoming  681                                          |
+|  Current length = 25                                     |
+|  Maximal length = 30                                     |
+|  Average length = 17.4078                                |
+|  Minimal time = 0.00716609                               |
+|  Maximal time = 420.708                                  |
+|  Average time = 69.726                                   |
+|  Standard deviation = 74.6751                            |
++----------------------------------------------------------+
++----------------------------------------------------------+
+| STATISTIC Processing time                                |
++----------------------------------------------------------+
+|  Min = 0.413868                Max = 939.057             |
+|  Number of records = 704                                 |
+|  Average value = 91.7478                                 |
+|  Standard deviation = 116.534                            |
++----------------------------------------------------------+
++----------------------------------------------------------+
+| STATISTIC Priority wait time                             |
++----------------------------------------------------------+
+|  no record                                               |
++----------------------------------------------------------+
++----------------------------------------------------------+
+| STORE PreciseRefDev                                      |
++----------------------------------------------------------+
+|  Capacity = 2  (1 used, 1 free)                          |
+|  Time interval = 0 - 2920                                |
+|  Number of Enter operations = 139                        |
+|  Minimal used capacity = 0                               |
+|  Maximal used capacity = 2                               |
+|  Average used capacity = 0.629446                        |
++----------------------------------------------------------+
+
++----------------------------------------------------------+
+| STORE UnpreciseRefDev                                    |
++----------------------------------------------------------+
+|  Capacity = 10  (1 used, 9 free)                         |
+|  Time interval = 0 - 2920                                |
+|  Number of Enter operations = 587                        |
+|  Minimal used capacity = 0                               |
+|  Maximal used capacity = 5                               |
+|  Average used capacity = 2.50825                         |
++----------------------------------------------------------+
+
++----------------------------------------------------------+
+| QUEUE ManagerQueue                                       |
++----------------------------------------------------------+
+|  Time interval = 0 - 2920                                |
+|  Incoming  523                                           |
+|  Outcoming  521                                          |
+|  Current length = 2                                      |
+|  Maximal length = 23                                     |
+|  Average length = 3.34852                                |
+|  Minimal time = 0.00143645                               |
+|  Maximal time = 108.508                                  |
+|  Average time = 18.7195                                  |
+|  Standard deviation = 25.3469                            |
++----------------------------------------------------------+
+Number of processed orders: 704
+Number of rejected orders: 430
+Number of errors: 29
+Number of recalibrations: 7
+Number of catastrophic failures: 6
+Number of both failures catastrophies: 1
+Auto calibration probability: 0.348
+marek@a04-0730a:~/IMS_project$ ./lab
++----------------------------------------------------------+
+| FACILITY Externist                                       |
++----------------------------------------------------------+
+|  Status = BUSY                                           |
+|  Time interval = 0 - 2920                                |
+|  Number of requests = 74                                 |
+|  Average utilization = 0.7861                            |
++----------------------------------------------------------+
+
++----------------------------------------------------------+
+| FACILITY Manager                                         |
++----------------------------------------------------------+
+|  Status = BUSY                                           |
+|  Time interval = 0 - 2920                                |
+|  Number of requests = 836                                |
+|  Average utilization = 0.989083                          |
++----------------------------------------------------------+
+
++----------------------------------------------------------+
+| STORE Workers                                            |
++----------------------------------------------------------+
+|  Capacity = 3  (1 used, 2 free)                          |
+|  Time interval = 0 - 2920                                |
+|  Number of Enter operations = 493                        |
+|  Minimal used capacity = 0                               |
+|  Maximal used capacity = 3                               |
+|  Average used capacity = 2.37008                         |
++----------------------------------------------------------+
+
++----------------------------------------------------------+
+| QUEUE OrderQueue                                         |
++----------------------------------------------------------+
+|  Time interval = 0 - 2920                                |
+|  Incoming  685                                           |
+|  Outcoming  657                                          |
+|  Current length = 28                                     |
+|  Maximal length = 29                                     |
+|  Average length = 17.6946                                |
+|  Minimal time = 0.00797572                               |
+|  Maximal time = 236.252                                  |
+|  Average time = 72.6426                                  |
+|  Standard deviation = 61.5552                            |
++----------------------------------------------------------+
++----------------------------------------------------------+
+| STATISTIC Processing time                                |
++----------------------------------------------------------+
+|  Min = 0.634764                Max = 670.825             |
+|  Number of records = 659                                 |
+|  Average value = 98.7938                                 |
+|  Standard deviation = 107.585                            |
++----------------------------------------------------------+
++----------------------------------------------------------+
+| STATISTIC Priority wait time                             |
++----------------------------------------------------------+
+|  no record                                               |
++----------------------------------------------------------+
++----------------------------------------------------------+
+| STORE PreciseRefDev                                      |
++----------------------------------------------------------+
+|  Capacity = 2  (1 used, 1 free)                          |
+|  Time interval = 0 - 2920                                |
+|  Number of Enter operations = 127                        |
+|  Minimal used capacity = 0                               |
+|  Maximal used capacity = 2                               |
+|  Average used capacity = 0.635825                        |
++----------------------------------------------------------+
+  Input queue 'PreciseRefDev.Q'
++----------------------------------------------------------+
+| QUEUE Q                                                  |
++----------------------------------------------------------+
+|  Time interval = 0 - 2920                                |
+|  Incoming  4                                             |
+|  Outcoming  4                                            |
+|  Current length = 0                                      |
+|  Maximal length = 1                                      |
+|  Average length = 0.00504276                             |
+|  Minimal time = 1.23368                                  |
+|  Maximal time = 8.75966                                  |
+|  Average time = 3.68122                                  |
++----------------------------------------------------------+
+
++----------------------------------------------------------+
+| STORE UnpreciseRefDev                                    |
++----------------------------------------------------------+
+|  Capacity = 10  (0 used, 10 free)                        |
+|  Time interval = 0 - 2920                                |
+|  Number of Enter operations = 550                        |
+|  Minimal used capacity = 0                               |
+|  Maximal used capacity = 5                               |
+|  Average used capacity = 2.56243                         |
++----------------------------------------------------------+
+
++----------------------------------------------------------+
+| QUEUE ManagerQueue                                       |
++----------------------------------------------------------+
+|  Time interval = 0 - 2920                                |
+|  Incoming  487                                           |
+|  Outcoming  483                                          |
+|  Current length = 4                                      |
+|  Maximal length = 21                                     |
+|  Average length = 3.14279                                |
+|  Minimal time = 0.0244819                                |
+|  Maximal time = 118.149                                  |
+|  Average time = 18.7207                                  |
+|  Standard deviation = 23.5528                            |
++----------------------------------------------------------+
+Number of processed orders: 659
+Number of rejected orders: 448
+Number of errors: 35
+Number of recalibrations: 7
+Number of catastrophic failures: 4
+Number of both failures catastrophies: 0
+Auto calibration probability: 0.346
+marek@a04-0730a:~/IMS_project$ ./lab
++----------------------------------------------------------+
+| FACILITY Externist                                       |
++----------------------------------------------------------+
+|  Status = BUSY                                           |
+|  Time interval = 0 - 2920                                |
+|  Number of requests = 77                                 |
+|  Average utilization = 0.835631                          |
++----------------------------------------------------------+
+
++----------------------------------------------------------+
+| FACILITY Manager                                         |
++----------------------------------------------------------+
+|  Status = BUSY                                           |
+|  Time interval = 0 - 2920                                |
+|  Number of requests = 1024                               |
+|  Average utilization = 0.989262                          |
++----------------------------------------------------------+
+
++----------------------------------------------------------+
+| STORE Workers                                            |
++----------------------------------------------------------+
+|  Capacity = 3  (2 used, 1 free)                          |
+|  Time interval = 0 - 2920                                |
+|  Number of Enter operations = 631                        |
+|  Minimal used capacity = 0                               |
+|  Maximal used capacity = 3                               |
+|  Average used capacity = 2.4056                          |
++----------------------------------------------------------+
+
++----------------------------------------------------------+
+| QUEUE OrderQueue                                         |
++----------------------------------------------------------+
+|  Time interval = 0 - 2920                                |
+|  Incoming  809                                           |
+|  Outcoming  800                                          |
+|  Current length = 9                                      |
+|  Maximal length = 30                                     |
+|  Average length = 14.5339                                |
+|  Minimal time = 0.00432063                               |
+|  Maximal time = 336.152                                  |
+|  Average time = 52.8246                                  |
+|  Standard deviation = 62.0583                            |
++----------------------------------------------------------+
++----------------------------------------------------------+
+| STATISTIC Processing time                                |
++----------------------------------------------------------+
+|  Min = 0.639654                Max = 452.583             |
+|  Number of records = 820                                 |
+|  Average value = 71.7732                                 |
+|  Standard deviation = 76.7191                            |
++----------------------------------------------------------+
++----------------------------------------------------------+
+| STATISTIC Priority wait time                             |
++----------------------------------------------------------+
+|  no record                                               |
++----------------------------------------------------------+
++----------------------------------------------------------+
+| STORE PreciseRefDev                                      |
++----------------------------------------------------------+
+|  Capacity = 2  (0 used, 2 free)                          |
+|  Time interval = 0 - 2920                                |
+|  Number of Enter operations = 174                        |
+|  Minimal used capacity = 0                               |
+|  Maximal used capacity = 2                               |
+|  Average used capacity = 0.546124                        |
++----------------------------------------------------------+
+  Input queue 'PreciseRefDev.Q'
++----------------------------------------------------------+
+| QUEUE Q                                                  |
++----------------------------------------------------------+
+|  Time interval = 0 - 2920                                |
+|  Incoming  12                                            |
+|  Outcoming  12                                           |
+|  Current length = 0                                      |
+|  Maximal length = 2                                      |
+|  Average length = 0.0413248                              |
+|  Minimal time = 1.50593                                  |
+|  Maximal time = 65.0282                                  |
+|  Average time = 10.0557                                  |
++----------------------------------------------------------+
+
++----------------------------------------------------------+
+| STORE UnpreciseRefDev                                    |
++----------------------------------------------------------+
+|  Capacity = 10  (3 used, 7 free)                         |
+|  Time interval = 0 - 2920                                |
+|  Number of Enter operations = 672                        |
+|  Minimal used capacity = 0                               |
+|  Maximal used capacity = 5                               |
+|  Average used capacity = 2.64787                         |
++----------------------------------------------------------+
+
++----------------------------------------------------------+
+| QUEUE ManagerQueue                                       |
++----------------------------------------------------------+
+|  Time interval = 0 - 2920                                |
+|  Incoming  618                                           |
+|  Outcoming  614                                          |
+|  Current length = 4                                      |
+|  Maximal length = 21                                     |
+|  Average length = 2.79342                                |
+|  Minimal time = 0.0725506                                |
+|  Maximal time = 133.267                                  |
+|  Average time = 13.2519                                  |
+|  Standard deviation = 21.4324                            |
++----------------------------------------------------------+
+Number of processed orders: 820
+Number of rejected orders: 346
+Number of errors: 53
+Number of recalibrations: 7
+Number of catastrophic failures: 8
+Number of both failures catastrophies: 0
+Auto calibration probability: 0.352
+marek@a04-0730a:~/IMS_project$
