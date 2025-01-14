@@ -2,5 +2,5 @@
 Marek Effenberger (xeffen00) - vedoucí <br>
 Adam Valík (xvalik05) <br>
 
-Analysis, modeling and simulation (in SIMLIB/C++) of the operation of the calibration laboratory in the energy company (see doc.pdf).
+Analysis, modeling and simulation (in SIMLIB/C++) of the operation of the calibration laboratory in the energy company (see ```doc.pdf```).
 
